@@ -3,13 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>Loke室內高爾夫 | Loke Indoor Golf</title>
     <meta name="description" content="中部第一家、最注重教學品質的室內高爾夫球場，提供打球、教學、餐飲等完善服務。數據領航，揮桿新境界。">
+    
+    <link rel="canonical" href="https://www.lokegolf.com.tw/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.lokegolf.com.tw/">
+    <meta property="og:title" content="Loke室內高爾夫 | Loke Indoor Golf">
+    <meta property="og:description" content="中部第一家數據領航室內高爾夫，專業教學與頂級設備。">
+    <meta property="og:image" content="https://www.lokegolf.com.tw/images/hero-bg.jpg">
+
+    <link rel="icon" type="image/png" href="images/logo.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Noto+Sans+KR:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,24 +44,26 @@
     </script>
 
     <style>
-        /* Custom Styles */
         body {
             font-family: 'Noto Sans TC', 'Noto Sans JP', 'Noto Sans KR', 'Roboto', sans-serif;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            /* 修正左右晃動的關鍵：隱藏水平溢出 */
-            overflow-x: hidden;
+            overflow-x: hidden; /* 防止左右晃動 */
             width: 100%;
         }
         
-        /* 強制讓 onclick 的元素顯示手型游標 */
+        .allow-select {
+            -webkit-user-select: text !important;
+            -moz-user-select: text !important;
+            -ms-user-select: text !important;
+            user-select: text !important;
+            cursor: text !important;
+        }
         [onclick] {
             cursor: pointer;
         }
-
-        /* Fade-in Animation Classes */
         .fade-in-section {
             opacity: 0;
             transform: translateY(20px);
@@ -63,17 +75,14 @@
             transform: none;
         }
 
-        /* Mobile Menu Transition */
         #mobile-menu {
             transition: max-height 0.3s ease-in-out;
         }
 
-        /* Background Overlay Gradient */
         .hero-overlay {
             background: linear-gradient(to right, rgba(26, 71, 42, 0.9), rgba(26, 71, 42, 0.4));
         }
 
-        /* Modal Animation */
         .modal-content {
             animation: modalPop 0.3s ease-out forwards;
         }
@@ -82,6 +91,7 @@
             100% { transform: scale(1); opacity: 1; }
         }
     </style>
+    
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
     </script>
