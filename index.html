@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Loke室內高爾夫 | Loke Indoor Golf</title>
+    <meta name="description" content="中部第一家、最注重教學品質的室內高爾夫球場，提供打球、教學、餐飲等完善服務。數據領航，揮桿新境界。">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Noto+Sans+KR:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#1a472a',
+                            light: '#4ade80',
+                            brown: '#78350f',
+                            yellow: '#facc15',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans TC"', '"Noto Sans JP"', '"Noto Sans KR"', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Noto Sans TC', 'Noto Sans JP', 'Noto Sans KR', 'Roboto', sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* 修正左右晃動的關鍵：隱藏水平溢出 */
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        /* 強制讓 onclick 的元素顯示手型游標 */
+        [onclick] {
+            cursor: pointer;
+        }
+
+        /* Fade-in Animation Classes */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, visibility;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        /* Background Overlay Gradient */
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(26, 71, 42, 0.9), rgba(26, 71, 42, 0.4));
+        }
+
+        /* Modal Animation */
+        .modal-content {
+            animation: modalPop 0.3s ease-out forwards;
+        }
+        @keyframes modalPop {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 overflow-x-hidden">
+
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-[9999] transition-all duration-300 bg-brand-dark/95 backdrop-blur-sm text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0" onclick="showHomePage(); window.scrollTo(0,0)">
+                    <img src="https://duk.tw/05zYeE.png" alt="Loke Indoor Golf" class="h-16 w-auto object-contain">
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a onclick="scrollToSection('about')" class="hover:text-brand-yellow px-2 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav_about">關於洛克</a>
+                        <a onclick="scrollToSection('coach')" class="hover:text-brand-yellow px-2 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav_coach">創辦人簡介</a>
+                        <a onclick="scrollToSection('facilities')" class="hover:text-brand-yellow px-2 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav_facilities">場館設備</a>
+                        <a onclick="scrollToSection('pricing')" class="hover:text-brand-yellow px-2 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav_pricing">收費標準</a>
+                        <a onclick="scrollToSection('rental')" class="hover:text-brand-yellow px-2 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav_rental">場地租借</a>
+                        <a onclick="scrollToSection('handmade')" class="hover:text-brand-yellow px-2 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav_handmade">手作課程</a>
+                        <a onclick="scrollToSection('contact')" class="hover:text-brand-yellow px-2 py-2 rounded-md text-sm font-medium transition-colors" data-i18n="nav_contact">聯絡我們</a>
+                        
+                        <div class="relative inline-block text-left group">
+                            <button class="flex items-center gap-1 text-sm border border-brand-light px-2 py-1 rounded hover:bg-brand-light hover:text-brand-dark transition-colors">
+                                <i class="fa-solid fa-globe"></i> <span id="current-lang-label">ZH</span>
+                            </button>
+                            <div class="absolute right-0 mt-0 w-24 bg-white rounded-md shadow-lg py-1 hidden group-hover:block ring-1 ring-black ring-opacity-5 text-gray-800">
+                                <button onclick="changeLang('zh')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">繁體中文</button>
+                                <button onclick="changeLang('en')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">English</button>
+                                <button onclick="changeLang('kr')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">한국어</button>
+                                <button onclick="changeLang('jp')" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">日本語</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="toggleMobileMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-200 hover:text-white hover:bg-brand-light focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:hidden hidden bg-brand-dark border-t border-brand-light/20" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a onclick="scrollToSection('about'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_about">關於洛克</a>
+                <a onclick="scrollToSection('coach'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_coach">創辦人簡介</a>
+                <a onclick="scrollToSection('facilities'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_facilities">場館設備</a>
+                <a onclick="scrollToSection('pricing'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_pricing">收費標準</a>
+                <a onclick="scrollToSection('rental'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_rental">場地租借</a>
+                <a onclick="scrollToSection('handmade'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_handmade">手作課程</a>
+                <a onclick="scrollToSection('contact'); toggleMobileMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav_contact">立即預約</a>
+                <div class="flex space-x-4 px-3 py-2">
+                    <button onclick="changeLang('zh'); toggleMobileMenu()" class="text-xs bg-brand-light text-brand-dark px-2 py-1 rounded">中文</button>
+                    <button onclick="changeLang('en'); toggleMobileMenu()" class="text-xs border border-gray-400 text-gray-200 px-2 py-1 rounded">EN</button>
+                    <button onclick="changeLang('kr'); toggleMobileMenu()" class="text-xs border border-gray-400 text-gray-200 px-2 py-1 rounded">KR</button>
+                    <button onclick="changeLang('jp'); toggleMobileMenu()" class="text-xs border border-gray-400 text-gray-200 px-2 py-1 rounded">JP</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="main-page">
+        <header class="relative h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?q=80&w=2070&auto=format&fit=crop" alt="Indoor Golf Background" class="w-full h-full object-cover">
+                <div class="absolute inset-0 hero-overlay"></div>
+            </div>
+
+            <div class="relative z-10 text-center px-4 max-w-5xl mx-auto fade-in-section">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-tight drop-shadow-lg">
+                    <span class="block text-brand-light mb-3 text-lg md:text-xl font-medium tracking-[0.3em] uppercase">Loke Indoor Golf</span>
+                    <span data-i18n="hero_title">洛克室內高爾夫</span>
+                </h1>
+
+                <div class="mb-8">
+                    <span class="inline-block text-xl md:text-2xl text-brand-yellow font-light tracking-[0.2em] border-b border-brand-yellow/30 pb-2" data-i18n="hero_slogan">
+                        室內高爾夫 · 你最好的選擇
+                    </span>
+                </div>
+
+                <p class="text-lg md:text-xl text-gray-200 mb-10 max-w-3xl mx-auto font-light leading-relaxed" data-i18n="hero_subtitle">
+                    中部第一家、最注重教學品質的室內高爾夫球場，提供打球、教學、餐飲等完善服務
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a onclick="scrollToSection('contact')" class="bg-brand-yellow text-brand-dark font-bold py-4 px-8 rounded-full hover:bg-white hover:scale-105 transition-all shadow-lg text-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-calendar-check"></i> <span data-i18n="cta_book">立即預約</span>
+                    </a>
+                    <a onclick="scrollToSection('facilities')" class="border-2 border-white text-white font-bold py-4 px-8 rounded-full hover:bg-white hover:text-brand-dark transition-all text-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-eye"></i> <span data-i18n="cta_explore">場館簡介</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <div class="bg-red-600 text-white py-3 overflow-hidden relative shadow-md">
+            <div class="max-w-7xl mx-auto px-4 text-center font-bold text-lg md:text-xl animate-pulse">
+                <i class="fa-solid fa-fire text-yellow-300 mr-2"></i>
+                <span data-i18n="promo_text">⚡️挑戰全台最低價⚡️ 平日16:00前入場打18洞，買 2 小時送 30 分</span>
+                <i class="fa-solid fa-fire text-yellow-300 ml-2"></i>
+            </div>
+        </div>
+
+        <section id="about" class="py-20 bg-white overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in-section">
+                        <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+                            <img src="https://duk.tw/8J0voj.jpg" alt="Loke Golf Environment" class="w-full h-[400px] object-cover hover:scale-105 transition-transform duration-700">
+                            <div class="absolute bottom-0 left-0 bg-brand-dark text-white px-6 py-4 rounded-tr-xl">
+                                <span class="text-2xl font-bold block">Est. 2017</span>
+                                <span class="text-sm text-brand-light" data-i18n="since">深耕台中</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fade-in-section">
+                        <h2 class="text-[#000080] font-bold text-lg mb-2 uppercase tracking-wider" data-i18n="about_label">關於洛克</h2>
+                        <h3 class="text-3xl md:text-4xl font-bold text-brand-dark mb-6" data-i18n="about_title">引領室內高爾夫風潮</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed text-justify" data-i18n="about_desc1">
+                            洛克室內高爾夫創立於 2017 年，是台中地區最早引進並深耕經營的室內高爾夫球館之一。我們始終秉持著「專業、競技、健康、娛樂」四大經營理念，打破天氣與時間的限制。
+                        </p>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-justify" data-i18n="about_desc2">
+                            無論您是追求成績突破的進階好手，還是初次接觸高爾夫的新手，Loke都能透過精準的數據分析，協助您建立正確的發力姿勢，實現快速提升。
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-light/20 flex items-center justify-center text-brand-dark flex-shrink-0">
+                                    <i class="fa-solid fa-chalkboard-user"></i>
+                                </div>
+                                <span class="font-medium" data-i18n="val_teaching">專業教學</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-light/20 flex items-center justify-center text-brand-dark flex-shrink-0">
+                                    <i class="fa-solid fa-utensils"></i>
+                                </div>
+                                <span class="font-medium" data-i18n="val_dining">多樣化餐食選擇</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-light/20 flex items-center justify-center text-brand-dark flex-shrink-0">
+                                    <i class="fa-solid fa-door-closed"></i>
+                                </div>
+                                <span class="font-medium" data-i18n="val_private">開放式打位球道</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-light/20 flex items-center justify-center text-brand-dark flex-shrink-0">
+                                    <i class="fa-solid fa-cloud-sun"></i>
+                                </div>
+                                <span class="font-medium" data-i18n="val_weather">全天候舒適擊球</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="coach" class="py-20 bg-gray-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in-section">
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-dark" data-i18n="coach_title">創辦人暨教練</h2>
+                    <div class="w-20 h-1 bg-brand-yellow mx-auto mt-4"></div>
+                </div>
+
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden fade-in-section">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-1/3 relative">
+                            <img src="https://duk.tw/OVHp9J.jpg" alt="Coach Ken Lo" class="w-full h-full object-cover min-h-[400px]">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-8">
+                                <div>
+                                    <h3 class="text-white text-3xl font-bold">羅凱中 Ken Lo</h3>
+                                    <p class="text-brand-light mt-1" data-i18n="coach_role">教練 / Founder</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="md:w-2/3 p-8 md:p-12 flex flex-col justify-center">
+                            <h4 class="text-2xl font-bold text-brand-dark mb-4" data-i18n="coach_subtitle">結合球技與健康的專家</h4>
+                            <p class="text-gray-600 mb-6 italic border-l-4 border-brand-yellow pl-4" data-i18n="coach_quote">
+                                "我們教的不只是揮桿，更是如何用健康的身體，享受一輩子的流暢擊球。"
+                            </p>
+
+                            <p class="text-gray-600 mb-8 leading-relaxed" data-i18n="coach_desc">
+                                擁有超過 20 年豐富教學經驗，現已教導超過500位學生，羅教練不僅在賽場上擁有輝煌資歷，更結合了「健康管理」專業。擅長從身體素質出發，為學員量身打造最不容易受傷、且發力最有效率的揮桿機制。
+                            </p>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="flex items-center gap-2 text-brand-dark">
+                                    <i class="fa-solid fa-check-circle text-brand-light"></i>
+                                    <span data-i18n="cred_1">PGA 認證職業教練</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-brand-dark">
+                                    <i class="fa-solid fa-check-circle text-brand-light"></i>
+                                    <span data-i18n="cred_2">TPGA 巡迴挑戰賽選手</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-brand-dark">
+                                    <i class="fa-solid fa-check-circle text-brand-light"></i>
+                                    <span data-i18n="cred_3">ACI 國際註冊健康管理師</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-brand-dark">
+                                    <i class="fa-solid fa-check-circle text-brand-light"></i>
+                                    <span data-i18n="cred_4">生命說 減脂教練</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADDED overflow-hidden here to prevent side scroll from blur effect -->
+        <section id="facilities" class="py-20 bg-brand-dark text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-brand-light opacity-5 rounded-full blur-3xl"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16 fade-in-section">
+                    <h2 class="text-3xl md:text-4xl font-bold" data-i18n="fac_title">場館與設備</h2>
+                    <p class="text-gray-300 mt-4 max-w-2xl mx-auto" data-i18n="fac_subtitle">引進最高規格的模擬設備，打造最舒適的擊球環境，提供最精準的數據分析。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 hover:bg-white/20 transition-all fade-in-section border border-white/10">
+                        <div class="w-16 h-16 bg-brand-yellow rounded-full flex items-center justify-center text-brand-dark text-2xl mb-6">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4" data-i18n="fac_1_title">高規格模擬球道</h3>
+                        <p class="text-gray-300 leading-relaxed" data-i18n="fac_1_desc">全館設有 4 個專業球道，搭載高精度感測設備，即時回饋擊球數據（距離、轉速、桿面角度等）。</p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 hover:bg-white/20 transition-all fade-in-section border border-white/10 delay-100">
+                        <div class="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center text-brand-dark text-2xl mb-6">
+                            <i class="fa-solid fa-wind"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4" data-i18n="fac_2_title">舒適潔淨環境</h3>
+                        <p class="text-gray-300 leading-relaxed" data-i18n="fac_2_desc">嚴格控管的環境清潔與空調設備，提供寬敞的優質運動空間，讓您專注每一次揮桿。</p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 hover:bg-white/20 transition-all fade-in-section border border-white/10 delay-200">
+                        <div class="w-16 h-16 bg-brand-brown text-white rounded-full flex items-center justify-center text-2xl mb-6">
+                            <i class="fa-solid fa-tablet-screen-button"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4" data-i18n="fac_3_title">數據分析系統</h3>
+                        <p class="text-gray-300 leading-relaxed" data-i18n="fac_3_desc">透過數據可視化，將揮桿動作科學化，並透過現場即時進行專業分析與指導，不再憑感覺練球，讓進步看得見。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in-section">
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-dark" data-i18n="price_title">服務項目與收費</h2>
+                    <p class="text-gray-600 mt-4" data-i18n="price_note">※ 詳細價格歡迎來電或現場洽詢</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-2xl shadow-lg p-8 flex flex-col fade-in-section hover:-translate-y-2 transition-transform duration-300">
+                        <h3 class="text-2xl font-bold text-brand-dark mb-2" data-i18n="plan_a_title">練習場</h3>
+                        <div class="text-brand-light font-bold mb-6" data-i18n="plan_a_sub">Driving Range</div>
+                        <ul class="space-y-4 mb-8 flex-1">
+                            <li class="flex items-start gap-3 text-gray-600">
+                                <i class="fa-solid fa-check text-brand-light mt-1"></i>
+                                <span data-i18n="plan_a_desc1">適合日常練習、調整動作</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-600">
+                                <i class="fa-solid fa-check text-brand-light mt-1"></i>
+                                <span data-i18n="plan_a_desc2">數據回饋模式，效率提升</span>
+                            </li>
+                        </ul>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                             <p class="text-sm font-bold text-brand-dark bg-green-50 p-2 rounded block" data-i18n="plan_a_package">
+                                <i class="fa-solid fa-tags mr-1"></i> 練球卡買20小時6000元<br><span class="text-xs text-green-600 ml-5">（省600)</span>
+                            </p>
+                        </div>
+                        <div class="border-t border-gray-100 pt-6 text-center mt-auto">
+                            <p class="text-3xl font-bold text-brand-dark font-sans">$350<span class="text-base font-normal text-gray-500">/hr</span></p>
+                            <p class="text-sm text-gray-500 mt-1" data-i18n="plan_a_price_note">提供會員儲值優惠</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-dark rounded-2xl shadow-xl p-8 flex flex-col transform md:-translate-y-4 border-4 border-brand-yellow fade-in-section relative">
+                        <div class="absolute top-0 right-0 bg-brand-yellow text-brand-dark text-xs font-bold px-3 py-1 rounded-bl-lg uppercase">Popular</div>
+                        <h3 class="text-2xl font-bold text-white mb-2" data-i18n="plan_b_title">18洞模擬下場</h3>
+                        <div class="text-brand-yellow font-bold mb-6" data-i18n="plan_b_sub">18-Hole Round</div>
+                        <ul class="space-y-4 mb-8 flex-1">
+                            <li class="flex items-start gap-3 text-gray-300">
+                                <i class="fa-solid fa-check text-brand-yellow mt-1"></i>
+                                <span data-i18n="plan_b_desc1">適合聚會、雨天體驗下場樂趣</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-300">
+                                <i class="fa-solid fa-check text-brand-yellow mt-1"></i>
+                                <span data-i18n="plan_b_desc2">收錄多國知名球場圖資</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-300">
+                                <i class="fa-solid fa-check text-brand-yellow mt-1"></i>
+                                <span data-i18n="plan_b_desc3">真實地形與果嶺推桿體驗</span>
+                            </li>
+                        </ul>
+                          <div class="mt-4 pt-4 border-t border-gray-600">
+                            <p class="text-sm font-bold text-brand-yellow bg-white/10 p-2 rounded block" data-i18n="plan_b_package">
+                               <i class="fa-solid fa-ticket mr-1"></i> 18洞球券10張7000元<br><span class="text-xs text-yellow-300 ml-5">（省700)</span>
+                           </p>
+                       </div>
+                        <div class="border-t border-gray-600 pt-6 text-center mt-auto">
+                            <p class="text-3xl font-bold text-white font-sans">$500<span class="text-base font-normal text-gray-400">/hr</span></p>
+                            <p class="text-sm text-gray-400 mt-1" data-i18n="plan_b_price_note">$770 / 每人一場 (18洞)</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl shadow-lg p-8 flex flex-col fade-in-section hover:-translate-y-2 transition-transform duration-300">
+                        <h3 class="text-2xl font-bold text-brand-dark mb-2" data-i18n="plan_c_title">專業教學課程</h3>
+                        <div class="text-brand-light font-bold mb-6" data-i18n="plan_c_sub">Professional Lessons</div>
+                        <ul class="space-y-4 mb-8 flex-1">
+                            <li class="flex items-start gap-3 text-gray-600">
+                                <i class="fa-solid fa-check text-brand-light mt-1"></i>
+                                <span data-i18n="plan_c_desc1">單堂動作分析與診斷</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-600">
+                                <i class="fa-solid fa-check text-brand-light mt-1"></i>
+                                <span data-i18n="plan_c_desc2">成人系統化教學</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-gray-600">
+                                <i class="fa-solid fa-check text-brand-light mt-1"></i>
+                                <span data-i18n="plan_c_desc3">青少年培訓班</span>
+                            </li>
+                        </ul>
+                        <div class="border-t pt-6 text-center">
+                            <button onclick="openLessonsModal()" class="inline-block bg-brand-dark text-white px-6 py-2 rounded-full hover:bg-brand-light hover:text-brand-dark transition-colors font-medium cursor-pointer" data-i18n="btn_inquire">
+                                查看更多
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADDED overflow-hidden here as well -->
+        <section id="rental" class="py-20 bg-brand-dark text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-brand-light opacity-5 rounded-full blur-3xl"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16 fade-in-section">
+                    <h2 class="text-3xl md:text-4xl font-bold" data-i18n="rental_title">多元空間租借</h2>
+                    <p class="text-gray-300 mt-4 max-w-2xl mx-auto" data-i18n="rental_desc">不只是高爾夫，我們提供多樣化的空間運用方案，滿足商務與活動需求。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden hover:bg-white/20 transition-all fade-in-section border border-white/10 group">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://duk.tw/0saHnz.jpg" alt="Office Space" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-brand-yellow" data-i18n="rental_1_title">辦公空間租借</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed" data-i18n="rental_1_desc">位於2樓的獨立空間，適合小型會議、移動辦公或團隊聚會，也適合聯誼活動。我們可以準備手工菜色，提供安靜且舒適的環境。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden hover:bg-white/20 transition-all fade-in-section border border-white/10 group delay-100">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://duk.tw/ZqoYFu.jpg" alt="Corporate Event" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-brand-yellow" data-i18n="rental_2_title">企業合作</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed" data-i18n="rental_2_desc">打造最獨特的員工福利或客戶招待活動，在輕鬆的揮桿中促進交流與合作。也歡迎企業洽詢優惠方案。</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl overflow-hidden hover:bg-white/20 transition-all fade-in-section border border-white/10 group delay-200">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://duk.tw/lynP2f.jpg" alt="Summer Camp" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-brand-yellow" data-i18n="rental_3_title">團體包場</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed" data-i18n="rental_3_desc">
+                                有辦過烤肉、比桿賽、戶外音樂會、卡啦ok等，有彈性多樣的選擇。球隊、社會機構、學校社團等都可洽詢。<br>
+                                <span class="text-xs block mt-1 text-brand-light/80">*一次可容納20人，最晚提前兩週預約</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="handmade" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden fade-in-section flex flex-col md:flex-row">
+                    <div class="md:w-1/2 relative h-64 md:h-auto">
+                        <img src="https://duk.tw/cMJhgp.jpg" alt="Handmade Workshop" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-brand-dark/20"></div>
+                    </div>
+                    <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                        <h2 class="text-3xl font-bold text-brand-dark mb-2" data-i18n="hand_title">藝術手作課程</h2>
+                        <div class="text-brand-brown font-medium mb-6" data-i18n="hand_subtitle">揮桿之餘的靜心時刻</div>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-bold text-brand-dark mb-2" data-i18n="hand_target_label">適合對象</h4>
+                                <p class="text-gray-600" data-i18n="hand_target_val">個人、成人團體、小朋友皆可</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark mb-2" data-i18n="hand_content_label">課程內容</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">蝶古巴特</span>
+                                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">土耳其燈</span>
+                                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">拼貼</span>
+                                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">手繪變體字</span>
+                                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">婚禮禮物製作</span>
+                                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">兒童積木</span>
+                                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">美甲</span>
+                                    <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">歐式彩繪</span>
+                                </div>
+                                <p class="text-gray-600 text-sm mt-3 leading-relaxed" data-i18n="hand_content_val">揮桿之外的精彩選擇！我們提供豐富的手作課程，讓陪同前來的伴侶或孩子也能享受藝術創作的療癒時光，全家人都能在洛克找到專屬的快樂。</p>
+                            </div>
+                            
+                            <div class="bg-brand-light/10 p-4 rounded-lg border border-brand-light/30">
+                                <div class="flex items-center gap-2 font-bold text-brand-dark text-lg">
+                                    <i class="fa-brands fa-line text-green-500 text-2xl"></i> 
+                                    <span data-i18n="hand_line_id">聯絡窗口 (Line ID): afish738</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="fade-in-section">
+                        <h2 class="text-3xl font-bold text-brand-dark mb-6" data-i18n="contact_title">聯絡我們</h2>
+                        <p class="text-gray-600 mb-8" data-i18n="contact_desc">歡迎預約體驗，展開您的室內高爾夫之旅！若有任何問題，歡迎隨時聯繫我們。</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-brand-dark text-xl flex-shrink-0">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800" data-i18n="lbl_phone">預約專線</h4>
+                                    <a href="tel:0425395567" class="text-brand-light font-bold text-lg hover:underline transition-colors">04-25395567</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-brand-dark text-xl flex-shrink-0">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800" data-i18n="lbl_fb">Facebook 預約</h4>
+                                    <a href="https://www.facebook.com/lokeindoorgolf/" target="_blank" class="text-brand-light font-bold text-lg hover:underline transition-colors">Loke Indoor Golf</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-brand-dark text-xl flex-shrink-0">
+                                    <i class="fa-brands fa-line"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800" data-i18n="lbl_line">LINE 預約</h4>
+                                    <a href="https://lin.ee/d88bff9" target="_blank" class="text-brand-light font-bold text-lg hover:underline transition-colors" data-i18n="line_val">加入官方line@</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-brand-dark text-xl flex-shrink-0">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800" data-i18n="lbl_address">場館地址</h4>
+                                    <p class="text-gray-600" data-i18n="address_val">台中市潭子區潭興路二段99號</p>
+                                    <p class="text-xs text-gray-500 mt-1" data-i18n="parking_note">※ 店前即有停車場</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-brand-dark text-xl flex-shrink-0">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800" data-i18n="lbl_hours">營業時間</h4>
+                                    <p class="text-gray-600"><span data-i18n="weekdays">週二至週日</span>: 10:00 - 23:00</p>
+                                    <p class="text-red-500 font-medium" data-i18n="closed_day">週一公休</p>
+                                    <p class="text-sm text-gray-500" data-i18n="holiday_note">國定假日正常營業</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 flex gap-4">
+                            <a href="tel:0425395567" class="flex-1 bg-brand-light text-brand-dark text-center py-3 rounded-lg font-bold hover:bg-green-400 transition-colors">
+                                <i class="fa-solid fa-phone mr-2"></i> <span data-i18n="btn_call">撥打電話</span>
+                            </a>
+                            <a href="https://maps.app.goo.gl/pKbQ1HSUpNJYwsFq7" target="_blank" class="flex-1 border border-brand-dark text-brand-dark text-center py-3 rounded-lg font-bold hover:bg-gray-50 transition-colors">
+                                <i class="fa-solid fa-map mr-2"></i> <span data-i18n="btn_map">Google 導航</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="h-[400px] bg-gray-200 rounded-2xl overflow-hidden shadow-lg fade-in-section">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3639.141565431448!2d120.7042563!3d24.2016259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3469177c387b320b%3A0xe54d92419c8f00!2z5rCb5YWL5a6k5YWn6auY54i+5aSr77yM5Y-w5Lit5YyX5bGv6auY54i+5aSr5pWZ5a2477yM5a6k5YWn6auY54i+5aSr57e057-S5aC0!5e0!3m2!1szh-TW!2stw!4v1703487000000!5m2!1szh-TW!2stw" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for Lessons -->
+    <div id="lessons-modal" class="hidden fixed inset-0 z-[10000] overflow-y-auto bg-black/70 backdrop-blur-sm flex justify-center items-start pt-10 pb-10 px-4 transition-opacity duration-300">
+        <div class="relative w-full max-w-5xl bg-white rounded-3xl shadow-2xl overflow-hidden modal-content">
+            <!-- Close Button -->
+            <button onclick="closeLessonsModal()" class="absolute top-4 right-4 z-50 w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors cursor-pointer">
+                <i class="fa-solid fa-xmark text-xl text-gray-600"></i>
+            </button>
+            
+            <div class="p-6 md:p-10">
+                <div class="w-full">
+                    <div class="text-center mb-12 px-4 max-w-7xl mx-auto">
+                        <h1 class="text-4xl md:text-5xl font-bold text-brand-dark mb-4" data-i18n="lessons_title">洛克高爾夫球教學</h1>
+                        <p class="text-xl text-brand-brown font-medium" data-i18n="lessons_subtitle">每期10堂課 | 教學1小時及10分鐘熱身 | 不需額外付費</p>
+                    </div>
+
+                    <div class="flex flex-col-reverse md:flex-row w-full bg-white mb-8">
+                        <div class="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-center items-start bg-gray-50 rounded-l-2xl">
+                            <h2 class="text-3xl font-bold text-brand-dark mb-4" data-i18n="course_1_title">成人基礎班</h2>
+                            <div class="text-brand-yellow font-bold text-2xl mb-6">$15,000</div>
+                            <p class="text-gray-600 mb-8 text-lg leading-relaxed" data-i18n="course_1_desc">提供全套學習環境，從零開始培養正確觀念。</p>
+                            <ul class="space-y-4 text-gray-700">
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-light mt-1"></i> <span data-i18n="course_1_feat1">高爾夫起源介紹</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-light mt-1"></i> <span data-i18n="course_1_feat2">基本動作練習</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-light mt-1"></i> <span data-i18n="course_1_feat3">肌群強化</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-light mt-1"></i> <span data-i18n="course_1_feat4">揮桿技巧教學</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-light mt-1"></i> <span data-i18n="course_1_feat5">實際下場技術指導</span></li>
+                            </ul>
+                        </div>
+                        <div class="w-full md:w-1/2 h-[300px] md:h-auto rounded-r-2xl overflow-hidden">
+                            <img src="https://www.performancegolf.com/wp-content/uploads/2024/06/sf1-driver-featured-image-blog.webp" alt="Adult Basic Course" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row w-full bg-white mb-8">
+                        <div class="w-full md:w-1/2 h-[300px] md:h-auto rounded-l-2xl overflow-hidden">
+                            <img src="https://topshelfgolf.com/cdn/shop/products/TruGolf-E6-Connect-Software-Data_grande.jpg?v=1673553296" alt="Golf Clinic" class="w-full h-full object-cover">
+                        </div>
+                        <div class="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-center items-start bg-gray-50 rounded-r-2xl">
+                            <h2 class="text-3xl font-bold text-brand-dark mb-4" data-i18n="course_2_title">單堂課程</h2>
+                            <div class="text-brand-yellow font-bold text-2xl mb-6">$2,000 / 堂</div>
+                            <p class="text-gray-600 mb-8 text-lg leading-relaxed" data-i18n="course_2_desc">針對特定問題進行診斷與修正，適合需要微調的球友。</p>
+                            <ul class="space-y-4 text-gray-700">
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-dark mt-1"></i> <span data-i18n="course_2_feat1">電腦影像分析診斷問題</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-dark mt-1"></i> <span data-i18n="course_2_feat2">提供建議即可改善方法</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-dark mt-1"></i> <span data-i18n="course_2_feat3">影像可傳 Line 存檔</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-dark mt-1"></i> <span data-i18n="course_2_feat4">了解自己的揮桿平面及桿面搭配</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col-reverse md:flex-row w-full bg-white">
+                        <div class="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-center items-start bg-gray-50 rounded-l-2xl">
+                            <h2 class="text-3xl font-bold text-brand-dark mb-4" data-i18n="course_3_title">青少年培訓班</h2>
+                            <div class="text-brand-yellow font-bold text-2xl mb-6">$15,000</div>
+                            <p class="text-gray-600 mb-8 text-lg leading-relaxed" data-i18n="course_3_desc">1對1教學，教導正確的高球技能，培養健康的社交運動。</p>
+                            <ul class="space-y-4 text-gray-700">
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-light mt-1"></i> <span data-i18n="course_3_feat1">1對1 專屬教學</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-light mt-1"></i> <span data-i18n="course_3_feat2">正確高球技能養成</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-light mt-1"></i> <span data-i18n="course_3_feat3">參與青少年GOLF競賽機會</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-light mt-1"></i> <span data-i18n="course_3_feat4">爭取榮譽</span></li>
+                            </ul>
+                        </div>
+                        <div class="w-full md:w-1/2 h-[300px] md:h-auto rounded-r-2xl overflow-hidden">
+                            <img src="https://media.istockphoto.com/id/1384802844/photo/boy-golf-player-hitting-by-iron-from-fairway.jpg?s=612x612&w=0&k=20&c=knnf7LEMLDba1v2zhlAyyeOZ0mwF2iKA8qeSBFtR0SM=" alt="Junior Training" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row w-full bg-white">
+                        <div class="w-full md:w-1/2 h-[300px] md:h-auto rounded-l-2xl overflow-hidden">
+                            <img src="https://www.briansgolfworks.com/Custom-Golf-Clubs/Teen-Golf-Clubs/Teen-Golfer-Group-2.jpg" alt="Children Class" class="w-full h-full object-cover">
+                        </div>
+                        <div class="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-center items-start bg-gray-50 rounded-r-2xl">
+                            <h2 class="text-3xl font-bold text-brand-dark mb-4" data-i18n="course_4_title">兒童班（小學三年級）</h2>
+                            <div class="text-brand-yellow font-bold text-2xl mb-6">$12,000</div>
+                            <ul class="space-y-4 text-gray-700">
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-dark mt-1"></i> <span data-i18n="course_4_feat1">訓練旋轉肌跟核心肌群，建立身體穩定性</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-dark mt-1"></i> <span data-i18n="course_4_feat2">了解每一隻球杆的擊球方式</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-dark mt-1"></i> <span data-i18n="course_4_feat3">正確擊球，避免用力揮桿</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-dark mt-1"></i> <span data-i18n="course_4_feat4">結合趣味遊戲教學</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 text-center bg-gray-50 p-8 rounded-2xl shadow-sm max-w-7xl mx-auto border border-gray-100">
+                        <h3 class="text-2xl font-bold text-brand-dark mb-4" data-i18n="lessons_cta_title">對課程有興趣嗎？</h3>
+                        <p class="text-gray-600 mb-6" data-i18n="lessons_cta_desc">歡迎填寫線上諮詢問卷，我們將由專人與您聯繫安排體驗！</p>
+                        <div class="flex justify-center">
+                            <a href="https://www.surveycake.com/s/blmOW" target="_blank" class="bg-brand-dark text-white px-8 py-4 rounded-full font-bold hover:bg-brand-light hover:text-brand-dark transition-all shadow-lg flex items-center gap-3 text-lg group">
+                                <i class="fa-solid fa-clipboard-list group-hover:scale-110 transition-transform"></i>
+                                <span data-i18n="btn_survey">填寫諮詢問卷</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-brand-dark text-white py-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="font-bold text-xl tracking-wider">LOKE GOLF</span>
+                <p class="text-gray-400 text-sm mt-1">© 2024 Loke Indoor Golf. All rights reserved.</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://www.facebook.com/lokeindoorgolf/" target="_blank" class="text-gray-400 hover:text-brand-yellow transition-colors"><i class="fa-brands fa-facebook text-xl"></i></a>
+                <a href="https://lin.ee/d88bff9" target="_blank" class="text-gray-400 hover:text-brand-yellow transition-colors"><i class="fa-brands fa-line text-xl"></i></a>
+                <a href="https://www.instagram.com/loke.golf/" target="_blank" class="text-gray-400 hover:text-brand-yellow transition-colors"><i class="fa-brands fa-instagram text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Translations Data ---
+        const translations = {
+            zh: {
+                nav_about: "關於洛克", nav_coach: "創辦人簡介", nav_facilities: "場館設備", nav_pricing: "收費標準", nav_contact: "聯絡我們",
+                nav_rental: "場地租借", nav_handmade: "手作課程",
+                
+                hero_title: "洛克室內高爾夫",
+                hero_slogan: "室內高爾夫 · 你最好的選擇", 
+                hero_subtitle: "中部第一家、最注重教學品質的室內高爾夫球場，提供打球、教學、餐飲等完善服務",
+                
+                cta_book: "立即預約", cta_explore: "場館簡介",
+                promo_text: "⚡️挑戰全台最低價⚡️ 平日16:00前入場打18洞，買 2 小時送 30 分",
+                since: "深耕台中",
+                about_label: "關於Loke", about_title: "引領室內高爾夫風潮",
+                about_desc1: "Loke室內高爾夫創立於 2017 年，是台中地區最早引進並深耕經營的室內高爾夫球館之一。我們始終秉持著「專業、競技、健康、娛樂」四大經營理念，打破天氣與時間的限制。",
+                about_desc2: "無論您是追求成績突破的進階好手，還是初次接觸高爾夫的新手，Loke都能透過精準的數據分析，協助您建立正確的發力姿勢，實現快速提升。",
+                val_teaching: "專業教學", val_dining: "多樣化餐食選擇", val_private: "開放式打位球道", val_weather: "全天候舒適擊球",
+                coach_title: "創辦人暨教練", coach_role: "教練 / Founder",
+                coach_subtitle: "結合球技與健康的專家",
+                coach_quote: "\"我們教的不只是揮桿，更是如何用健康的身體，享受一輩子的流暢擊球。\"",
+                coach_desc: "擁有超過 20 年豐富教學經驗，現已教導超過500位學生，羅教練不僅在賽場上擁有輝煌資歷，更結合了「健康管理」專業。擅長從身體素質出發，為學員量身打造最不容易受傷、且發力最有效率的揮桿機制。",
+                cred_1: "PGA 認證職業教練", cred_2: "TPGA 巡迴挑戰賽選手", cred_3: "ACI 國際註冊健康管理師", cred_4: "生命說 減脂教練",
+                fac_title: "場館與設備", fac_subtitle: "引進最高規格的模擬設備，打造最舒適的擊球環境，提供最精準的數據分析。",
+                fac_1_title: "高規格模擬球道", fac_1_desc: "全館設有 4 個專業球道，搭載高精度感測設備，即時回饋擊球數據（距離、轉速、桿面角度等）。",
+                fac_2_title: "舒適潔淨環境", fac_2_desc: "嚴格控管的環境清潔與空調設備，提供寬敞的優質運動空間，讓您專注每一次揮桿。",
+                fac_3_title: "數據分析系統", fac_3_desc: "透過數據可視化，將揮桿動作科學化，並透過現場即時進行專業分析與指導，不再憑感覺練球，讓進步看得見。",
+                price_title: "服務項目與收費", price_note: "※ 詳細價格歡迎來電或現場洽詢",
+                plan_a_title: "練習場", plan_a_sub: "Driving Range",
+                plan_a_desc1: "適合日常練習、調整動作", plan_a_desc2: "數據回饋模式，效率提升", plan_a_price_note: "提供會員儲值優惠",
+                plan_a_package: "<i class='fa-solid fa-tags mr-1'></i> 練球卡買20小時6000元<br><span class='text-xs text-green-600 ml-5'>（省600)</span>",
+                plan_b_title: "18洞模擬下場", plan_b_sub: "18-Hole Round",
+                plan_b_desc1: "適合聚會、雨天體驗下場樂趣", plan_b_desc2: "收錄多國知名球場圖資", plan_b_desc3: "真實地形與果嶺推桿體驗", plan_b_price_note: "$770 / 每人一場 (18洞)",
+                plan_b_package: "<i class='fa-solid fa-ticket mr-1'></i> 18洞球券10張7000元<br><span class='text-xs text-yellow-300 ml-5'>（省700)</span>",
+                plan_c_title: "專業教學課程", plan_c_sub: "Professional Lessons",
+                plan_c_desc1: "單堂動作分析與診斷", plan_c_desc2: "成人系統化教學", plan_c_desc3: "青少年培訓班", btn_inquire: "查看更多",
+                contact_title: "聯絡我們", contact_desc: "歡迎預約體驗，展開您的室內高爾夫之旅！若有任何問題，歡迎隨時聯繫我們。",
+                lbl_phone: "預約專線", lbl_address: "場館地址", address_val: "台中市潭子區潭興路二段99號", parking_note: "※ 店前即有停車場",
+                lbl_hours: "營業時間", weekdays: "週二至週日", closed_day: "週一公休", holiday_note: "國定假日正常營業",
+                lbl_fb: "Facebook 預約", lbl_ig: "Instagram",
+                lbl_line: "LINE 預約", line_val: "加入官方line@",
+                btn_call: "撥打電話", btn_map: "Google 導航",
+                // Lessons Page
+                lessons_title: "洛克高爾夫球教學", lessons_subtitle: "每期10堂課 | 教學1小時及10分鐘熱身 | 不需額外付費",
+                lessons_cta_title: "對課程有興趣嗎？", lessons_cta_desc: "歡迎填寫線上諮詢問卷，我們將由專人與您聯繫安排體驗！",
+                btn_survey: "填寫諮詢問卷",
+                course_1_title: "成人基礎班", course_1_desc: "提供全套學習環境，從零開始培養正確觀念。",
+                course_1_feat1: "高爾夫起源介紹", course_1_feat2: "基本動作練習", course_1_feat3: "肌群強化", course_1_feat4: "揮桿技巧教學", course_1_feat5: "實際下場技術指導",
+                course_2_title: "單堂課程", course_2_desc: "針對特定問題進行診斷與修正，適合需要微調的球友。",
+                course_2_feat1: "電腦影像分析診斷問題", course_2_feat2: "提供建議即可改善方法", course_2_feat3: "影像可傳 Line 存檔", course_2_feat4: "了解自己的揮桿平面及桿面搭配",
+                course_3_title: "青少年培訓班", course_3_desc: "1對1教學，教導正確的高球技能，培養健康的社交運動。",
+                course_3_feat1: "1對1 專屬教學", course_3_feat2: "正確高球技能養成", course_3_feat3: "參與青少年GOLF競賽機會", course_3_feat4: "爭取榮譽",
+                course_4_title: "兒童班（小學三年級）",
+                course_4_feat1: "訓練旋轉肌跟核心肌群，建立身體穩定性", course_4_feat2: "了解每一隻球杆的擊球方式", course_4_feat3: "正確擊球，避免用力揮桿", course_4_feat4: "結合趣味遊戲教學",
+                // Rental & Handmade
+                rental_title: "多元空間租借", rental_desc: "不只是高爾夫，我們提供多樣化的空間運用方案，滿足商務與活動需求。",
+                rental_1_title: "辦公空間租借", rental_1_desc: "位於2樓的獨立空間，適合小型會議、移動辦公或團隊聚會，也適合聯誼活動。我們可以準備手工菜色，提供安靜且舒適的環境。",
+                rental_2_title: "企業合作", rental_2_desc: "打造最獨特的員工福利或客戶招待活動，在輕鬆的揮桿中促進交流與合作。也歡迎企業洽詢優惠方案。",
+                rental_3_title: "團體包場", rental_3_desc: "有辦過烤肉、比桿賽、戶外音樂會、卡啦ok等，有彈性多樣的選擇。球隊、社會機構、學校社團等都可洽詢。<br><span class='text-xs block mt-1'>*一次可容納20人，最晚提前兩週預約</span>",
+                hand_title: "藝術手作課程", hand_subtitle: "揮桿之餘的靜心時刻",
+                hand_target_label: "適合對象", hand_target_val: "個人、成人團體、小朋友皆可",
+                hand_content_label: "課程內容", hand_content_val: "揮桿之外的精彩選擇！我們提供豐富的手作課程，讓陪同前來的伴侶或孩子也能享受藝術創作的療癒時光，全家人都能在洛克找到專屬的快樂。",
+                hand_line_id: "聯絡窗口 (Line ID): afish738"
+            },
+            en: {
+                nav_about: "About Us", nav_coach: "Head Coach", nav_facilities: "Facilities", nav_pricing: "Pricing", nav_contact: "Contact",
+                nav_rental: "Venue Rental", nav_handmade: "Handmade",
+                
+                hero_title: "Loke Indoor Golf",
+                hero_slogan: "Indoor Golf · Your Best Choice", 
+                hero_subtitle: "The premier indoor golf facility in Central Taiwan, combining professional competition with health management.",
+                
+                cta_book: "Book Now", cta_explore: "Facilities",
+                promo_text: "⚡️ Lowest Price Challenge ⚡️ Weekdays before 16:00 for 18 Holes, Buy 2 Hours Get 30 Mins Free",
+                since: "Since 2017",
+                about_label: "About Loke", about_title: "Leading the Indoor Golf Trend",
+                about_desc1: "Founded in 2017, Loke Indoor Golf is one of the pioneers in Taichung. We uphold the philosophy of 'Professionalism, Competition, Health, and Entertainment', breaking the limits of weather and time.",
+                about_desc2: "Whether you are an advanced player seeking breakthroughs or a beginner, our precise data analysis helps you establish the correct posture for rapid improvement.",
+                val_teaching: "Professional Teaching", val_dining: "Diverse Dining Options", val_private: "Open Lane Design", val_weather: "All-Weather Play",
+                coach_title: "Founder & Coach", coach_role: "Coach / Founder",
+                coach_subtitle: "Expert in Golf Skills & Health",
+                coach_quote: "\"We teach not just the swing, but how to enjoy a lifetime of fluid striking with a healthy body.\"",
+                coach_desc: "With over 20 years of experience, Coach Ken Lo combines a glorious competitive history with 'Health Management' expertise. He specializes in creating the most efficient, injury-free swing mechanisms tailored to each student's physical condition.",
+                cred_1: "PGA Certified Coach", cred_2: "TPGA Tour Challenger", cred_3: "ACI Reg. Health Manager", cred_4: "Fat Loss Coach",
+                fac_title: "Facilities", fac_subtitle: "Introducing the highest specification simulation equipment, creating the most comfortable hitting environment, and providing the most accurate data analysis.",
+                fac_1_title: "High-Spec Simulators", fac_1_desc: "4 professional lanes equipped with high-precision sensors providing real-time data (distance, spin, face angle, etc.).",
+                fac_2_title: "Clean Environment", fac_2_desc: "Strictly controlled cleaning and air conditioning providing a spacious quality sports space.",
+                fac_3_title: "Data Analysis System", fac_3_desc: "Visualizing swing data to make practice scientific, with real-time professional analysis and guidance, rather than feeling-based.",
+                price_title: "Services & Pricing", price_note: "* Please contact us for detailed pricing",
+                plan_a_title: "Driving Range", plan_a_sub: "Driving Range",
+                plan_a_desc1: "Daily practice & adjustment", plan_a_desc2: "Data feedback mode", plan_a_price_note: "Member discounts available",
+                plan_a_package: "<i class='fa-solid fa-tags mr-1'></i> 20 Hours Card $6000<br><span class='text-xs text-green-600 ml-5'>(Save $600)</span>",
+                plan_b_title: "18-Hole Round", plan_b_sub: "18-Hole Round",
+                plan_b_desc1: "Gatherings & Rainy days", plan_b_desc2: "Famous global courses", plan_b_desc3: "Real terrain & putting", plan_b_price_note: "$770 / Per Person Per Round (18 Holes)",
+                plan_b_package: "<i class='fa-solid fa-ticket mr-1'></i> 10 Coupons $7000<br><span class='text-xs text-yellow-300 ml-5'>(Save $700)</span>",
+                plan_c_title: "Pro Lessons", plan_c_sub: "Professional Lessons",
+                plan_c_desc1: "Swing Analysis", plan_c_desc2: "Adult System Training", plan_c_desc3: "Junior Training", btn_inquire: "View More",
+                contact_title: "Contact Us", contact_desc: "Book your experience now! Contact us for any questions.",
+                lbl_phone: "Reservation", lbl_address: "Address", address_val: "No. 99, Sec. 2, Tanxing Rd., Tanzi Dist., Taichung City", parking_note: "* Parking available in front",
+                lbl_hours: "Hours", weekdays: "Tue - Sun", closed_day: "Closed on Mon", holiday_note: "Open on National Holidays",
+                lbl_fb: "Facebook Booking", lbl_ig: "Instagram",
+                lbl_line: "LINE Booking", line_val: "Add Friend",
+                btn_call: "Call Us", btn_map: "Google Maps",
+                 // Lessons Page
+                lessons_title: "Loke Golf Lessons", lessons_subtitle: "10 Classes/Term | 1hr Teaching + 10min Warm-up | No Extra Fees",
+                lessons_cta_title: "Interested in Lessons?", lessons_cta_desc: "Please fill out the online inquiry form, and our specialist will contact you to arrange an experience!",
+                btn_survey: "Fill Inquiry Form",
+                course_1_title: "Adult Basic Course", course_1_desc: "Complete learning environment, building correct concepts from scratch.",
+                course_1_feat1: "Golf Origins Intro", course_1_feat2: "Basic Movement Practice", course_1_feat3: "Muscle Strengthening", course_1_feat4: "Swing Skills Teaching", course_1_feat5: "On-Course Guidance",
+                course_2_title: "Single Lesson", course_2_desc: "Diagnosis and correction for specific issues, suitable for players needing adjustments.",
+                course_2_feat1: "Computer Video Analysis", course_2_feat2: "Immediate Improvement Advice", course_2_feat3: "Video Saved via Line", course_2_feat4: "Understand Swing Plane & Face Angle",
+                course_3_title: "Junior Training", course_3_desc: "1-on-1 teaching, correct skills, cultivating healthy social sports.",
+                course_3_feat1: "1-on-1 Exclusive Teaching", course_3_feat2: "Correct Skill Development", course_3_feat3: "Junior GOLF Competition Opportunities", course_3_feat4: "Strive for Honor",
+                course_4_title: "Children's Class (3rd Grade)",
+                course_4_feat1: "Train rotator cuff and core muscles for stability", course_4_feat2: "Understand how to use every club", course_4_feat3: "Correct impact, avoid forceful swinging", course_4_feat4: "Fun game-based teaching",
+                // Rental & Handmade
+                rental_title: "Venue Rental", rental_desc: "More than just golf. We provide versatile space solutions for business and events.",
+                rental_1_title: "Office Space Rental", rental_1_desc: "Independent space on the 2nd floor, perfect for meetings, team gatherings, or social mixers. We can provide handmade catering.",
+                rental_2_title: "Corporate Cooperation", rental_2_desc: "Unique employee benefits or client entertainment with golf. Corporate inquiries for discount plans are welcome.",
+                rental_3_title: "Group Booking", rental_3_desc: "We have hosted BBQs, tournaments, concerts, karaoke, etc. Flexible options for teams, social groups, and clubs.<br><span class='text-xs block mt-1'>*Max 20 people, book 2 weeks in advance</span>",
+                hand_title: "Creative Workshop", hand_subtitle: "A moment of peace beyond the swing",
+                hand_target_label: "Target Audience", hand_target_val: "Individuals, Adult Groups, Kids",
+                hand_content_label: "Activities", hand_content_val: "Exciting options beyond the swing! We offer a variety of handmade courses so partners or children accompanying you can enjoy the healing time of artistic creation. Everyone can find their own happiness at Loke.",
+                hand_line_id: "Contact (Line ID): afish738"
+            },
+            kr: {
+                nav_about: "로크 소개", nav_coach: "대표 코치", nav_facilities: "시설 안내", nav_pricing: "이용 요금", nav_contact: "오시는 길",
+                nav_rental: "대관 안내", nav_handmade: "공방 수업",
+                
+                hero_title: "로크 실내 골프",
+                hero_slogan: "실내 골프 · 최고의 선택", 
+                hero_subtitle: "타이중 최초, 최고의 교육 품질을 자랑하는 실내 골프장. 게임, 레슨, 식사 등 완벽한 서비스를 제공합니다.",
+                
+                cta_book: "예약하기", cta_explore: "시설 둘러보기",
+                promo_text: "⚡️ 최저가 도전 ⚡️ 평일 16:00 이전 입장(18홀), 2시간 구매 시 30분 무료 증정",
+                since: "2017년부터",
+                about_label: "로크 골프", about_title: "실내 골프 트렌드를 선도하다",
+                about_desc1: "2017년 설립된 로크 실내 골프는 타이중 지역의 선구자입니다. 우리는 '전문성, 경기, 건강, 오락'의 이념을 바탕으로 날씨와 시간의 제약을 뛰어넘습니다.",
+                about_desc2: "기록 경신을 노리는 상급자나 초보자 모두에게 정밀한 데이터 분석을 통해 올바른 자세를 확립하고 빠른 실력 향상을 돕습니다.",
+                val_teaching: "전문 레슨", val_dining: "다양한 식사 옵션", val_private: "오픈 타석 설계", val_weather: "날씨 걱정 없는 플레이",
+                coach_title: "설립자 및 코치", coach_role: "코치 / Founder",
+                coach_subtitle: "골프 기술과 건강의 이중 전문가",
+                coach_quote: "\"우리는 스윙뿐만 아니라 건강한 신체로 평생 골프를 즐기는 법을 가르칩니다.\"",
+                coach_desc: "20년 이상의 풍부한 교육 경험을 가진 Ken Lo 코치는 '건강 관리' 전문 지식을 결합하여 부상 없이 가장 효율적인 스윙 메커니즘을 맞춤형으로 제공합니다.",
+                cred_1: "PGA 인증 프로 코치", cred_2: "TPGA 투어 챌린지 선수", cred_3: "ACI 국제 공인 건강 관리사", cred_4: "체지방 감량 코치",
+                fac_title: "시설 및 장비", fac_subtitle: "최고 사양의 시뮬레이터 도입, 가장 쾌적한 타격 환경 조성, 가장 정밀한 데이터 분석 제공.",
+                fac_1_title: "최고급 시뮬레이터", fac_1_desc: "고정밀 센서가 장착된 4개의 전문 타석에서 비거리, 회전수, 클럽 페이스 각도 등을 실시간으로 피드백합니다.",
+                fac_2_title: "쾌적하고 깨끗한 환경", fac_2_desc: "엄격한 청결 관리와 공조 설비로 금연의 쾌적한 고품질 운동 공간을 제공합니다.",
+                fac_3_title: "데이터 분석 시스템", fac_3_desc: "스윙 동작을 데이터로 시각화하고 현장에서 즉각적인 전문 분석과 지도를 통해 감각이 아닌 과학적인 연습이 가능합니다.",
+                price_title: "서비스 및 요금", price_note: "* 자세한 가격은 전화나 방문 문의 바랍니다",
+                plan_a_title: "연습 타석", plan_a_sub: "Driving Range",
+                plan_a_desc1: "일상 연습 및 자세 교정", plan_a_desc2: "데이터 피드백 모드", plan_a_price_note: "회원 충전 할인 제공",
+                plan_a_package: "<i class='fa-solid fa-tags mr-1'></i> 20시간 카드 $6000<br><span class='text-xs text-green-600 ml-5'>($600 절약)</span>",
+                plan_b_title: "18홀 게임", plan_b_sub: "18-Hole Round",
+                plan_b_desc1: "모임 및 우천 시 추천", plan_b_desc2: "세계 유명 코스 수록", plan_b_desc3: "실제 지형 및 퍼팅 체험", plan_b_price_note: "$770 / 1인 1게임 (18홀)",
+                plan_b_package: "<i class='fa-solid fa-ticket mr-1'></i> 10회 쿠폰 $7000<br><span class='text-xs text-yellow-300 ml-5'>($700 절약)</span>",
+                plan_c_title: "전문 레슨", plan_c_sub: "Professional Lessons",
+                plan_c_desc1: "원포인트 스윙 분석", plan_c_desc2: "성인 체계적 교육", plan_c_desc3: "주니어 육성반", btn_inquire: "더 보기",
+                contact_title: "오시는 길", contact_desc: "지금 바로 예약하세요! 문의 사항은 언제든 환영합니다.",
+                lbl_phone: "예약 문의", lbl_address: "주소", address_val: "타이중시 탄쯔구 탄싱로 2단 99호", parking_note: "* 매장 앞 주차 가능",
+                lbl_hours: "영업 시간", weekdays: "화 - 일", closed_day: "월요일 휴무", holiday_note: "공휴일 정상 영업",
+                lbl_fb: "페이스북 예약", lbl_ig: "인스타그램",
+                lbl_line: "LINE 예약", line_val: "친구 추가",
+                btn_call: "전화 걸기", btn_map: "구글 지도",
+                 // Lessons Page
+                lessons_title: "로크 골프 레슨", lessons_subtitle: "10회 / 기 | 1시간 수업 + 10분 워밍업 | 추가 비용 없음",
+                lessons_cta_title: "레슨에 관심이 있으신가요?", lessons_cta_desc: "온라인 상담 설문지를 작성해 주시면 전담 직원이 연락드려 체험을 도와드립니다!",
+                btn_survey: "상담 설문지 작성",
+                course_1_title: "성인 기초반", course_1_desc: "완벽한 학습 환경 제공, 기초부터 올바른 개념 확립.",
+                course_1_feat1: "골프 기원 소개", course_1_feat2: "기본 동작 연습", course_1_feat3: "근육 강화", course_1_feat4: "스윙 기술 교육", course_1_feat5: "실전 필드 기술 지도",
+                course_2_title: "원포인트 레슨", course_2_desc: "특정 문제 진단 및 수정, 미세 조정이 필요한 골퍼에게 적합.",
+                course_2_feat1: "컴퓨터 영상 분석 및 진단", course_2_feat2: "즉각적인 개선 방법 제안", course_2_feat3: "영상 라인(Line) 전송 가능", course_2_feat4: "스윙 평면 및 클럽 페이스 이해",
+                course_3_title: "주니어 육성반", course_3_desc: "1:1 교육, 올바른 골프 기술 지도, 건강한 사회적 스포츠 함양.",
+                course_3_feat1: "1:1 전담 교육", course_3_feat2: "올바른 기술 습득", course_3_feat3: "주니어 골프 대회 참가 기회", course_3_feat4: "명예 쟁취",
+                course_4_title: "어린이 반 (초등학교 3학년)",
+                course_4_feat1: "회전근개 및 코어 근육 단련, 신체 안정성 확립", course_4_feat2: "각 클럽의 타격 방식 이해", course_4_feat3: "올바른 타격, 무리한 스윙 방지", course_4_feat4: "재미있는 게임 교육 결합",
+                // Rental & Handmade
+                rental_title: "다목적 공간 대관", rental_desc: "골프 그 이상. 비즈니스와 이벤트를 위한 다양한 공간 솔루션을 제공합니다.",
+                rental_1_title: "사무 공간 대관", rental_1_desc: "2층 독립 공간, 소규모 회의나 팀 모임, 사교 모임에 적합합니다. 수제 요리도 준비해 드릴 수 있습니다.",
+                rental_2_title: "기업 제휴", rental_2_desc: "직원 복지나 고객 접대를 위한 특별한 골프 경험. 기업 할인 플랜 문의도 환영합니다.",
+                rental_3_title: "단체 대관", rental_3_desc: "바비큐, 스트로크 대회, 야외 콘서트, 노래방 등 다양한 행사가 가능합니다. 동호회, 단체, 학교 동아리 문의 환영.<br><span class='text-xs block mt-1'>*최대 20명 수용, 최소 2주 전 예약</span>",
+                hand_title: "예술 공예 수업", hand_subtitle: "스윙 너머의 힐링 시간",
+                hand_target_label: "수강 대상", hand_target_val: "개인, 성인 단체, 어린이 모두 환영",
+                hand_content_label: "수업 내용", hand_content_val: "스윙 그 이상의 즐거움! 동반하는 파트너나 아이들도 예술 창작의 힐링 시간을 즐길 수 있도록 다양한 수공예 수업을 제공합니다. 온 가족이 로크에서 특별한 즐거움을 찾으세요.",
+                hand_line_id: "문의 (Line ID): afish738"
+            },
+            jp: {
+                nav_about: "Lokeについて", nav_coach: "創設者紹介", nav_facilities: "施設・設備", nav_pricing: "料金プラン", nav_contact: "お問い合わせ",
+                nav_rental: "スペース貸出", nav_handmade: "手作り体験",
+                hero_title: "Loke インドアゴルフ",
+                hero_slogan: "インドアゴルフ・最高の選択",
+                hero_subtitle: "中部エリア初、最も専門的な指導品質を誇るインドアゴルフ場。プレー、レッスン、お食事など充実したサービスを提供。",
+                cta_book: "今すぐ予約", cta_explore: "施設案内",
+                promo_text: "⚡️台湾全土最安値に挑戦⚡️ 平日16:00前入場（18ホール）、2時間購入で30分無料贈呈",
+                since: "Since 2017",
+                about_label: "Lokeについて", about_title: "インドアゴルフのトレンドを牽引",
+                about_desc1: "Lokeインドアゴルフは2017年に設立され、台中エリアでいち早く導入・運営されているインドアゴルフ場の一つです。「専門性、競技、健康、娯楽」の4つの理念を掲げ、天候や時間の制限を打ち破ります。",
+                about_desc2: "スコアアップを目指す上級者も、初めてクラブを握る初心者も、Lokeなら高精度のデータ分析を通じて正しいフォームを身につけ、素早い上達を実現できます。",
+                val_teaching: "プロの指導", val_dining: "多彩な食事", val_private: "オープン打席", val_weather: "全天候型",
+                coach_title: "創設者兼コーチ", coach_role: "コーチ / 創設者",
+                coach_subtitle: "ゴルフ技術と健康の専門家",
+                coach_quote: "\"私たちが教えるのはスイングだけではありません。健康な体で、生涯にわたりスムーズなショットを楽しむ方法をお伝えします。\"",
+                coach_desc: "20年以上の豊富な指導経験を持ち、これまでに200名以上の生徒を指導。Ken Loコーチは輝かしい競技歴に加え、「健康管理」の専門知識も併せ持っています。身体の素質に基づき、怪我をしにくく、かつ最も効率的なスイングメカニズムをオーダーメイドで指導します。",
+                cred_1: "PGA認定プロコーチ", cred_2: "TPGAツアー選手", cred_3: "ACI国際登録健康管理士", cred_4: "減量コーチ",
+                fac_title: "施設と設備", fac_subtitle: "最高スペックのシミュレーターを導入し、最も快適なプレイ環境を作り、最も精密なデータ分析を提供します。",
+                fac_1_title: "高性能シミュレーター", fac_1_desc: "全館に4つのプロ仕様打席を設置。高精度センサーを搭載し、打球データ（飛距離、回転数、フェース角など）を即座にフィードバックします。",
+                fac_2_title: "快適で清潔な環境", fac_2_desc: "徹底した清掃と空調管理により、完全禁煙の高品質なスポーツ空間を提供。一打一打に集中できます。",
+                fac_3_title: "データ分析システム", fac_3_desc: "スイングデータを可視化して科学的に分析し、その場でプロによる指導を行うことで、感覚に頼らない練習を実現します。",
+                price_title: "サービスと料金", price_note: "※ 詳細な料金はお電話または店頭にてお問い合わせください",
+                plan_a_title: "打ちっ放し練習", plan_a_sub: "Driving Range",
+                plan_a_desc1: "日常の練習やフォーム調整に", plan_a_desc2: "データフィードバックモードで効率アップ", plan_a_price_note: "会員チャージ割引あり",
+                plan_a_package: "<i class='fa-solid fa-tags mr-1'></i> 20時間カード $6000<br><span class='text-xs text-green-600 ml-5'>($600 お得)</span>",
+                plan_b_title: "18ホールラウンド", plan_b_sub: "18-Hole Round",
+                plan_b_desc1: "友人との集まりや雨の日のラウンド体験に", plan_b_desc2: "世界各国の有名コースを収録", plan_b_desc3: "リアルな地形とパッティング体験", plan_b_price_note: "$770 / 1人1ラウンド (18ホール)",
+                plan_b_package: "<i class='fa-solid fa-ticket mr-1'></i> 18ホール回数券10枚 $7000<br><span class='text-xs text-yellow-300 ml-5'>($700 お得)</span>",
+                plan_c_title: "プロレッスン", plan_c_sub: "Professional Lessons",
+                plan_c_desc1: "ワンポイント動作分析と診断", plan_c_desc2: "成人向け体系的レッスン", plan_c_desc3: "ジュニア育成クラス", btn_inquire: "もっと見る",
+                contact_title: "お問い合わせ", contact_desc: "ぜひ体験をご予約ください！ご不明な点がございましたら、お気軽にお問い合わせください。",
+                lbl_phone: "予約専用ダイヤル", lbl_address: "住所", address_val: "台中市潭子區潭興路二段99号", parking_note: "※ 店前に駐車場あり",
+                lbl_hours: "営業時間", weekdays: "火〜日", closed_day: "月曜定休", holiday_note: "祝日は通常営業",
+                lbl_fb: "Facebook 予約", lbl_ig: "Instagram",
+                lbl_line: "LINE 予約", line_val: "友達追加",
+                btn_call: "電話をかける", btn_map: "Googleマップ",
+                // Lessons Page
+                lessons_title: "Lokeゴルフレッスン", lessons_subtitle: "1期10回 | レッスン1時間 + ウォームアップ10分 | 追加料金なし",
+                lessons_cta_title: "レッスンに興味がありますか？", lessons_cta_desc: "オンライン相談フォームにご記入いただければ、専任スタッフより体験の手配についてご連絡いたします！",
+                btn_survey: "相談フォームに記入",
+                course_1_title: "成人基礎クラス", course_1_desc: "ゼロから正しい概念を養う、充実した学習環境を提供。",
+                course_1_feat1: "ゴルフの起源紹介", course_1_feat2: "基本動作練習", course_1_feat3: "体幹・筋力強化", course_1_feat4: "スイング技術指導", course_1_feat5: "実践ラウンド技術指導",
+                course_2_title: "単発レッスン", course_2_desc: "特定の問題を診断・修正。微調整が必要なゴルファーに最適。",
+                course_2_feat1: "コンピュータ映像分析・診断", course_2_feat2: "即効性のある改善アドバイス", course_2_feat3: "映像はLINEで保存可能", course_2_feat4: "スイングプレーンとフェース角の理解",
+                course_3_title: "ジュニア育成クラス", course_3_desc: "マンツーマン指導で正しいゴルフ技術を教え、健全なスポーツマンシップを育みます。",
+                course_3_feat1: "マンツーマン専属指導", course_3_feat2: "正しいスキルの習得", course_3_feat3: "ジュニア大会への参加機会", course_3_feat4: "栄誉を目指す",
+                course_4_title: "キッズクラス（小学3年生）",
+                course_4_feat1: "回旋筋と体幹のトレーニング、身体の安定性を確立", course_4_feat2: "各クラブの打ち方を理解", course_4_feat3: "正しいインパクト、力まないス윙", course_4_feat4: "楽しいゲーム形式の指導",
+                // Rental & Handmade
+                rental_title: "多目的スペースレンタル", rental_desc: "ゴルフだけではありません。ビジネスやイベントに合わせた多様なスペース活用プランをご提案します。",
+                rental_1_title: "オフィスレンタル", rental_1_desc: "2階の独立スペース。小会議、リモートワーク、チームの集まりに最適。交流会にも適しており、手作り料理の提供も可能です。静かで快適な環境をご用意します。",
+                rental_2_title: "企業提携", rental_2_desc: "ユニークな福利厚生や顧客接待に。リラックスしたスイングの中で交流と協力を促進します。企業の割引プランについてもお気軽にご相談ください。",
+                rental_3_title: "団体貸切", rental_3_desc: "BBQ、ストロークプレー大会、野外コンサート、カラオケなど実績多数。チーム、社会団体、学校サークルなどお気軽にご相談ください。<br><span class='text-xs block mt-1'>*定員20名、2週間前までに要予約</span>",
+                hand_title: "アート＆手作り教室", hand_subtitle: "スイングの合間の癒しのひととき",
+                hand_target_label: "対象", hand_target_val: "個人、大人グループ、お子様も大歓迎",
+                hand_content_label: "コース内容", hand_content_val: "スイング以外の楽しみも！デコパージュ、トルコランプ、コラージュ、カリグラフィー、ウェディングギフト制作、子供向けブロック、ネイルアート、トールペイントなど、豊富な手作りコースをご用意。同伴のパートナーやお子様も芸術的な癒しの時間を楽しめ、ご家族全員がLokeで特別な喜びを見つけられます。",
+                hand_line_id: "お問い合わせ (Line ID): afish738"
+            }
+        };
+
+        // --- Functions ---
+        function changeLang(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    // Check if content has HTML tags (like <br>)
+                    if (translations[lang][key].includes('<')) {
+                        el.innerHTML = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+            document.getElementById('current-lang-label').textContent = lang.toUpperCase();
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- Modal Logic ---
+        function openLessonsModal() {
+            const modal = document.getElementById('lessons-modal');
+            modal.classList.remove('hidden');
+            // Prevent background scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLessonsModal() {
+            const modal = document.getElementById('lessons-modal');
+            modal.classList.add('hidden');
+            // Restore background scrolling
+            document.body.style.overflow = '';
+        }
+
+        function showHomePage() {
+             // This function might be deprecated if we only use modal now, 
+             // but keeping it for navbar logo click just in case
+             // or ensuring modal is closed if logo is clicked
+             closeLessonsModal();
+             window.scrollTo(0, 0);
+        }
+        
+        // --- Smooth Scrolling for Google Sites ---
+        function scrollToSection(id) {
+            // Close modal if open
+            closeLessonsModal();
+            // 2. Find target element
+            const element = document.getElementById(id);
+            // 3. Scroll
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // --- Animation Observer ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, observerOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-in-section');
+            fadeElements.forEach(el => observer.observe(el));
+        });
+
+        // --- Sticky Navbar Effect ---
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.replace('bg-brand-dark/95', 'bg-brand-dark/100');
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.classList.replace('bg-brand-dark/100', 'bg-brand-dark/95');
+            }
+        });
+    </script>
+</body>
+</html>
